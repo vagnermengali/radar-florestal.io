@@ -255,4 +255,4 @@ document
   .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
 document
   .getElementById("logoutBtn")
-  .addEventListener("click", () => (window.location.href = "/"));
+  .addEventListener("click", () => (window.location.href = "/radar-florestal.io"));
