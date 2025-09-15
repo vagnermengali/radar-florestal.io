@@ -1,4 +1,3 @@
-// dashboard.js
 const user = { name: "João Silva", email: "joao@example.com" };
 document.getElementById("userName").textContent = `Olá, ${user.name}`;
 document.getElementById("userEmail").textContent = user.email;
@@ -133,9 +132,15 @@ function renderSection(sectionKey) {
       <!-- Mapa -->
       <div class="bg-white rounded-xl shadow p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Mapa da Região</h2>
-        <div id="map" class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
-          <span class="text-gray-500">[Mapa Interativo Aqui]</span>
-        </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.123456789012!2d-43.921137!3d-19.9678913!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa698451d9994ad:0xd639ebec4ddb6f17!2sSerra+do+Curral!5e0!3m2!1spt-BR!2sbr!4v1631234567890"
+          width="100%"
+          height="400"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
 
       <!-- Alertas da Comunidade -->
@@ -193,6 +198,7 @@ function renderSection(sectionKey) {
     </div>
   `;
 
+  // Eventos de Meus Alertas
   document.getElementById("addAlertBtn").addEventListener("click", () => {
     openModal("Digite o título do alerta:", "", (value) => {
       if (value) {
@@ -249,10 +255,19 @@ document.querySelectorAll("#menuItems button").forEach((btn) => {
 
 document
   .getElementById("profileBtn")
-  .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
+  .addEventListener(
+    "click",
+    () => (window.location.href = "/radar-florestal.io/profile.html")
+  );
 document
   .getElementById("profileTopBtn")
-  .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
+  .addEventListener(
+    "click",
+    () => (window.location.href = "/radar-florestal.io/profile.html")
+  );
 document
   .getElementById("logoutBtn")
-  .addEventListener("click", () => (window.location.href = "/radar-florestal.io"));
+  .addEventListener(
+    "click",
+    () => (window.location.href = "/radar-florestal.io")
+  );
