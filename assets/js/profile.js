@@ -54,8 +54,8 @@ document.getElementById("profileForm").addEventListener("submit", async (e) => {
 });
 
 cancelBtn.addEventListener("click", () => {
-  window.location.href = "dashboard.html";
+  window.location.href = "/radar-florestal.io/dashboard.html";
 });
 backBtn.addEventListener("click", () => {
-  window.location.href = "dashboard.html";
+  window.location.href = "/radar-florestal.io/dashboard.html";
 });

@@ -249,10 +249,10 @@ document.querySelectorAll("#menuItems button").forEach((btn) => {
 
 document
   .getElementById("profileBtn")
-  .addEventListener("click", () => (window.location.href = "profile.html"));
+  .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
 document
   .getElementById("profileTopBtn")
-  .addEventListener("click", () => (window.location.href = "profile.html"));
+  .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
 document
   .getElementById("logoutBtn")
-  .addEventListener("click", () => (window.location.href = "index.html"));
+  .addEventListener("click", () => (window.location.href = "/"));

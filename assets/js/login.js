@@ -15,7 +15,7 @@ form.addEventListener("submit", async (e) => {
   await new Promise((resolve) => setTimeout(resolve, 1500));
 
   if (email === "admin@radarflorestal.com" && password === "123456") {
-    window.location.href = "dashboard.html";
+    window.location.href = "/radar-florestal.io/dashboard.html";
   } else {
     errorText.textContent = "Email ou senha incorretos";
     errorMsg.classList.remove("hidden");
