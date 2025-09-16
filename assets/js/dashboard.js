@@ -224,7 +224,7 @@ function renderSection(sectionKey) {
   });
 
   document.querySelectorAll(".deleteAlert").forEach((btn) => {
-    btn.addEventListener("load", () => {
+    btn.addEventListener("click", () => {
       const idx = btn.dataset.index;
       openModal(
         "Deseja realmente excluir este alerta?",
