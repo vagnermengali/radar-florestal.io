@@ -198,7 +198,6 @@ function renderSection(sectionKey) {
     </div>
   `;
 
-  // Eventos de Meus Alertas
   document.getElementById("addAlertBtn").addEventListener("click", () => {
     openModal("Digite o título do alerta:", "", (value) => {
       if (value) {
@@ -255,19 +254,19 @@ document.querySelectorAll("#menuItems button").forEach((btn) => {
 
 document
   .getElementById("profileBtn")
-  .addEventListener(
-    "click",
-    () => (window.location.href = "/radar-florestal.io/profile.html")
-  );
+  .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
 document
   .getElementById("profileTopBtn")
-  .addEventListener(
-    "click",
-    () => (window.location.href = "/radar-florestal.io/profile.html")
-  );
+  .addEventListener("click", () => (window.location.href = "/radar-florestal.io/profile.html"));
 document
   .getElementById("logoutBtn")
-  .addEventListener(
-    "click",
-    () => (window.location.href = "/radar-florestal.io")
-  );
+  .addEventListener("click", () => (window.location.href = "/radar-florestal.io"));
+
+document.getElementById("meusAlertasBtn")?.addEventListener("click", () => {
+  window.location.href = "/radar-florestal.io/meus-alertas.html";
+});
+
+document.querySelector('a[href="/radar-florestal.io/forum.html"]')?.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location.href = "/radar-florestal.io/forum.html";
+});
