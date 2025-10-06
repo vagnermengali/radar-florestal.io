@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - Radar Florestal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="assets/img/faviconn.svg" />
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4"
+  >
+    <div class="w-full max-w-md">
+      <div class="text-center mb-8">
+        <div
+          class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center shadow-md mx-auto mb-4"
+        >
+          <i class="fas fa-leaf text-green-600 text-2xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Radar Florestal</h1>
+        <p class="text-gray-500">Crie sua conta</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-md p-8">
+        <form id="registerForm" class="space-y-6">
+          <div class="flex flex-col items-center space-y-3">
+            <div class="relative">
+              <div
+                class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center overflow-hidden shadow-md"
+              >
+                <img
+                  id="avatarPreview"
+                  src=""
+                  alt="Avatar"
+                  class="hidden w-full h-full object-cover"
+                />
+                <i
+                  id="avatarPlaceholder"
+                  class="fas fa-user text-green-600 text-3xl"
+                ></i>
+              </div>
+              <label
+                class="absolute bottom-0 right-0 w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center cursor-pointer hover:bg-green-700 transition"
+              >
+                <i class="fas fa-camera text-sm"></i>
+                <input
+                  id="avatarInput"
+                  type="file"
+                  accept="image/*"
+                  class="hidden"
+                />
+              </label>
+            </div>
+            <p class="text-xs text-gray-500">
+              Clique na câmera para adicionar uma foto
+            </p>
+          </div>
+          <div class="space-y-4">
+            <div class="space-y-2">
+              <label for="name" class="text-sm font-medium text-gray-700"
+                >Nome completo</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                ></i>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Seu nome completo"
+                  required
+                  class="w-full border border-gray-300 rounded-lg px-10 py-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+                />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label for="email" class="text-sm font-medium text-gray-700"
+                >Email</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                ></i>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  required
+                  class="w-full border border-gray-300 rounded-lg px-10 py-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+                />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label for="password" class="text-sm font-medium text-gray-700"
+                >Senha</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                ></i>
+                <input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  minlength="6"
+                  class="w-full border border-gray-300 rounded-lg px-10 py-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+                />
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label
+                for="confirmPassword"
+                class="text-sm font-medium text-gray-700"
+                >Confirmar senha</label
+              >
+              <div class="relative">
+                <i
+                  class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                ></i>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  required
+                  class="w-full border border-gray-300 rounded-lg px-10 py-2 focus:ring-2 focus:ring-green-400 focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            id="errorMsg"
+            class="hidden bg-red-100 text-red-600 text-sm p-3 rounded-lg flex items-center gap-2"
+          >
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="errorText">As senhas não coincidem.</span>
+          </div>
+
+          <div
+            id="successMsg"
+            class="hidden bg-green-100 text-green-700 text-sm p-3 rounded-lg text-center"
+          >
+            Cadastro realizado com sucesso!
+          </div>
+          <button
+            id="registerBtn"
+            type="submit"
+            class="w-full bg-green-600 text-white font-semibold py-2 rounded-lg hover:bg-green-700 transition-colors"
+          >
+            <i class="fas fa-user-plus mr-2 hidden sm:inline"></i> Cadastrar
+          </button>
+        </form>
+        <div class="text-center mt-6 text-sm">
+          <p class="text-gray-500">
+            Já tem uma conta?
+            <a
+              href="login.html"
+              class="text-green-600 hover:text-green-700 font-medium"
+              >Entrar</a
+            >
+          </p>
+          <a
+            href="/radar-florestal.io"
+            class="text-gray-400 hover:text-gray-600 block mt-3"
+            >← Voltar para home</a
+          >
+        </div>
+      </div>
+    </div>
+    <script src="assets/js/register.js"></script>
+  </body>
+</html>
