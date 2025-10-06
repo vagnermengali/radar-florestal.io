@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("meusAlertasBtn")?.addEventListener("click", () => {
-    window.location.href = "/radar-florestal.io/meus-alertas.html";
+    window.location.href = "/radar-florestal.io/my-alerts.html";
   });
 
   const forumLink = document.querySelector('a[href="forum.html"]');

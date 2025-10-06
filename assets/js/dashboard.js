@@ -203,7 +203,7 @@ document
   .addEventListener("click", () => (window.location.href = "/radar-florestal.io"));
 
 document.getElementById("meusAlertasBtn")?.addEventListener("click", () => {
-  window.location.href = "/radar-florestal.io/meus-alertas.html";
+  window.location.href = "/radar-florestal.io/my-alerts.html";
 });
 
 document.querySelector('a[href="/radar-florestal.io/forum.html"]')?.addEventListener("click", (e) => {
