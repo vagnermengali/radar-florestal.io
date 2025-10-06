@@ -39,8 +39,7 @@ const sections = {
   },
   mineracao: {
     title: "Impactos da Mineração",
-    description:
-      "Monitoramento de atividades minerárias e seus efeitos ambientais",
+    description: "Monitoramento de atividades minerárias e seus efeitos ambientais",
     stats: [
       { label: "Áreas de Mineração", value: "23", trend: "stable" },
       { label: "Impacto Ambiental", value: "Médio", trend: "down" },
@@ -57,10 +56,6 @@ const sections = {
     ],
   },
 };
-
-let meusAlertas = [
-  { titulo: "Desmatamento em área próxima", data: "10/09/2025" },
-];
 
 const content = document.getElementById("content");
 let activeSection = "desmatamento";
@@ -129,6 +124,13 @@ function renderSection(sectionKey) {
           .join("")}
       </div>
 
+      <!-- Botão Adicionar Alertas (acima do mapa) -->
+      <div class="flex justify-end">
+        <button id="addAlertBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 mb-4">
+          <i class="fas fa-plus mr-2"></i>Novo Alerta
+        </button>
+      </div>
+
       <!-- Mapa -->
       <div class="bg-white rounded-xl shadow p-6">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Mapa da Região</h2>
@@ -163,78 +165,16 @@ function renderSection(sectionKey) {
           </div>
         </div>
       </div>
-
-      <!-- Meus Alertas -->
-      <div class="bg-white rounded-xl shadow p-6">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold text-gray-800">Meus Alertas</h2>
-          <button id="addAlertBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-            <i class="fas fa-plus mr-2"></i>Novo Alerta
-          </button>
-        </div>
-        <div id="meusAlertasList" class="space-y-4">
-          ${meusAlertas
-            .map(
-              (alerta, index) => `
-            <div class="p-4 border rounded-lg flex justify-between items-center">
-              <div>
-                <p class="font-medium text-gray-700">${alerta.titulo}</p>
-                <p class="text-sm text-gray-500">Criado em ${alerta.data}</p>
-              </div>
-              <div class="flex gap-2">
-                <button class="editAlert px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded hover:bg-blue-200" data-index="${index}">
-                  <i class="fas fa-edit"></i> Editar
-                </button>
-                <button class="deleteAlert px-3 py-1 text-sm bg-red-100 text-red-600 rounded hover:bg-red-200" data-index="${index}">
-                  <i class="fas fa-trash"></i> Excluir
-                </button>
-              </div>
-            </div>
-          `
-            )
-            .join("")}
-        </div>
-      </div>
     </div>
   `;
 
+  // Evento do botão Adicionar Alertas
   document.getElementById("addAlertBtn").addEventListener("click", () => {
     openModal("Digite o título do alerta:", "", (value) => {
       if (value) {
-        meusAlertas.push({
-          titulo: value,
-          data: new Date().toLocaleDateString("pt-BR"),
-        });
-        renderSection(activeSection);
+        // Aqui você pode enviar o alerta para a comunidade ou salvar
+        alert(`Alerta criado: ${value}`);
       }
-    });
-  });
-
-  document.querySelectorAll(".editAlert").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const idx = btn.dataset.index;
-      openModal("Editar alerta:", meusAlertas[idx].titulo, (value) => {
-        if (value) {
-          meusAlertas[idx].titulo = value;
-          renderSection(activeSection);
-        }
-      });
-    });
-  });
-
-  document.querySelectorAll(".deleteAlert").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const idx = btn.dataset.index;
-      openModal(
-        "Deseja realmente excluir este alerta?",
-        "Digite 'SIM' para confirmar",
-        (value) => {
-          if (value.toUpperCase() === "SIM") {
-            meusAlertas.splice(idx, 1);
-            renderSection(activeSection);
-          }
-        }
-      );
     });
   });
 

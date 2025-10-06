@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard - Radar Florestal</title>
+    <title>Meus Alertas - Radar Florestal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -12,10 +12,13 @@
     <link rel="icon" type="image/x-icon" href="assets/img/faviconn.svg">
   </head>
   <body class="min-h-screen bg-gray-50 flex">
+    <!-- Backdrop Sidebar -->
     <div
       id="sidebarBackdrop"
       class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"
     ></div>
+
+    <!-- Sidebar -->
     <aside
       id="sidebar"
       class="fixed lg:sticky top-0 left-0 h-screen w-64 bg-gradient-to-b from-green-600 to-green-700 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300"
@@ -63,8 +66,7 @@
               <i class="fas fa-hippo w-5"></i> Fauna
             </button>
           </li>
-                    <li class="pt-3 border-t border-white/20"></li>
-
+          <li class="pt-3 border-t border-white/20"></li>
           <li>
             <a
               href="/radar-florestal.io/forum.html"
@@ -73,7 +75,6 @@
               <i class="fas fa-comments w-5"></i> Fórum
             </a>
           </li>
-
           <li>
             <button
               id="meusAlertasBtn"
@@ -99,6 +100,8 @@
         </button>
       </div>
     </aside>
+
+    <!-- Main -->
     <main class="flex-1 flex flex-col ml-0">
       <header
         class="bg-white shadow px-6 py-4 border-b border-gray-200 flex items-center justify-between"
@@ -107,7 +110,7 @@
           <i class="fas fa-bars w-6 h-6"></i>
         </button>
         <h1 class="text-xl font-semibold text-gray-800 hidden lg:block">
-          Dashboard
+          Meus Alertas
         </h1>
         <div class="flex items-center gap-4">
           <span id="userEmail" class="text-sm text-gray-500 hidden sm:block"
@@ -121,13 +124,30 @@
           </button>
         </div>
       </header>
-      <div id="content" class="flex-1 p-6 overflow-auto"></div>
+
+      <div id="content" class="flex-1 p-6 overflow-auto">
+        <!-- Conteúdo principal da página -->
+        <div class="bg-white rounded-xl shadow p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold">Seus Alertas</h2>
+            <button
+              id="addAlertBtn"
+              class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            >
+              <i class="fas fa-plus mr-2"></i>Novo Alerta
+            </button>
+          </div>
+          <div id="alertList" class="space-y-4"></div>
+        </div>
+      </div>
     </main>
+
+    <!-- Modal -->
     <div
       id="alertModal"
       class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden"
     >
-      <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 space-y-4  mx-1">
+      <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 space-y-4 mx-1">
         <h3 id="modalTitle" class="text-lg font-semibold text-gray-800">
           Título
         </h3>
@@ -153,6 +173,136 @@
         </div>
       </div>
     </div>
-    <script src="assets/js/dashboard.js"></script>
+
+    <script>
+      // Usuário e modal
+      const user = { name: "João Silva", email: "joao@example.com" };
+      document.getElementById("userName").textContent = `Olá, ${user.name}`;
+      document.getElementById("userEmail").textContent = user.email;
+
+      const sidebar = document.getElementById("sidebar");
+      const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+
+      document.getElementById("openSidebar").addEventListener("click", () => {
+        sidebar.classList.remove("-translate-x-full");
+        sidebarBackdrop.classList.remove("hidden");
+      });
+      document.getElementById("closeSidebar").addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        sidebarBackdrop.classList.add("hidden");
+      });
+      sidebarBackdrop.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        sidebarBackdrop.classList.add("hidden");
+      });
+
+      document.getElementById("profileBtn").addEventListener("click", () => {
+        window.location.href = "/radar-florestal.io/profile.html";
+      });
+      document.getElementById("profileTopBtn").addEventListener("click", () => {
+        window.location.href = "/radar-florestal.io/profile.html";
+      });
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        window.location.href = "/radar-florestal.io";
+      });
+      document.getElementById("meusAlertasBtn").addEventListener("click", () => {
+        window.location.href = "/radar-florestal.io/meus-alertas.html";
+      });
+
+      // Modal
+      const modal = document.getElementById("alertModal");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalInput = document.getElementById("modalInput");
+      const modalCancel = document.getElementById("modalCancel");
+      const modalConfirm = document.getElementById("modalConfirm");
+      let modalCallback = null;
+
+      function openModal(title, defaultValue = "", callback) {
+        modalTitle.textContent = title;
+        modalInput.value = defaultValue;
+        modal.classList.remove("hidden");
+        modalCallback = callback;
+        modalInput.focus();
+      }
+
+      modalCancel.addEventListener("click", () => modal.classList.add("hidden"));
+      modalConfirm.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        if (modalCallback) modalCallback(modalInput.value);
+      });
+
+      // Alertas
+      let meusAlertas = [
+        { titulo: "Desmatamento em área próxima", data: "10/09/2025" },
+      ];
+      const alertList = document.getElementById("alertList");
+
+      function renderAlertList() {
+        alertList.innerHTML = meusAlertas
+          .map(
+            (alerta, index) => `
+          <div class="p-4 border rounded-lg flex justify-between items-center bg-gray-50">
+            <div>
+              <p class="font-medium text-gray-700">${alerta.titulo}</p>
+              <p class="text-sm text-gray-500">Criado em ${alerta.data}</p>
+            </div>
+            <div class="flex gap-2">
+              <button class="editAlert px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded hover:bg-blue-200" data-index="${index}">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button class="deleteAlert px-3 py-1 text-sm bg-red-100 text-red-600 rounded hover:bg-red-200" data-index="${index}">
+                <i class="fas fa-trash"></i> Excluir
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+
+        // Eventos dos botões
+        document.querySelectorAll(".editAlert").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const idx = btn.dataset.index;
+            openModal("Editar alerta:", meusAlertas[idx].titulo, (value) => {
+              if (value) {
+                meusAlertas[idx].titulo = value;
+                renderAlertList();
+              }
+            });
+          });
+        });
+
+        document.querySelectorAll(".deleteAlert").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const idx = btn.dataset.index;
+            openModal(
+              "Deseja realmente excluir este alerta?",
+              "Digite 'SIM' para confirmar",
+              (value) => {
+                if (value.toUpperCase() === "SIM") {
+                  meusAlertas.splice(idx, 1);
+                  renderAlertList();
+                }
+              }
+            );
+          });
+        });
+      }
+
+      document.getElementById("addAlertBtn").addEventListener("click", () => {
+        openModal("Digite o título do alerta:", "", (value) => {
+          if (value) {
+            meusAlertas.push({
+              titulo: value,
+              data: new Date().toLocaleDateString("pt-BR"),
+            });
+            renderAlertList();
+          }
+        });
+      });
+
+      // Inicializa a lista
+      renderAlertList();
+    </script>
   </body>
 </html>

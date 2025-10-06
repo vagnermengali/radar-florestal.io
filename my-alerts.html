@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Alertas - Radar Florestal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Cabeçalho -->
+  <header class="bg-green-600 text-white p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Meus Alertas</h1>
+    <button id="backBtn" class="bg-green-700 px-4 py-2 rounded hover:bg-green-800">
+      <i class="fas fa-arrow-left mr-2"></i>Voltar
+    </button>
+  </header>
+
+  <!-- Conteúdo -->
+  <main class="p-6">
+    <div class="bg-white rounded-xl shadow p-6">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold">Seus Alertas</h2>
+        <button id="addAlertBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+          <i class="fas fa-plus mr-2"></i>Novo Alerta
+        </button>
+      </div>
+      <div id="alertList" class="space-y-4">
+        <!-- Lista de alertas será inserida aqui pelo JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div id="alertModal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md">
+      <h3 id="modalTitle" class="text-lg font-semibold mb-4">Título do Modal</h3>
+      <input id="modalInput" type="text" class="w-full border p-2 rounded mb-4" placeholder="Digite aqui...">
+      <div class="flex justify-end gap-4">
+        <button id="modalCancel" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancelar</button>
+        <button id="modalConfirm" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let meusAlertas = [
+      { titulo: "Desmatamento em área próxima", data: "10/09/2025" },
+    ];
+
+    const alertList = document.getElementById("alertList");
+    const modal = document.getElementById("alertModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalInput = document.getElementById("modalInput");
+    const modalCancel = document.getElementById("modalCancel");
+    const modalConfirm = document.getElementById("modalConfirm");
+    let modalCallback = null;
+
+    function openModal(title, defaultValue = "", callback) {
+      modalTitle.textContent = title;
+      modalInput.value = defaultValue;
+      modal.classList.remove("hidden");
+      modalCallback = callback;
+      modalInput.focus();
+    }
+
+    modalCancel.addEventListener("click", () => modal.classList.add("hidden"));
+    modalConfirm.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      if(modalCallback) modalCallback(modalInput.value);
+    });
+
+    function renderAlertList() {
+      alertList.innerHTML = meusAlertas.map((alerta, index) => `
+        <div class="p-4 border rounded-lg flex justify-between items-center bg-gray-50">
+          <div>
+            <p class="font-medium text-gray-700">${alerta.titulo}</p>
+            <p class="text-sm text-gray-500">Criado em ${alerta.data}</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="editAlert px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded hover:bg-blue-200" data-index="${index}">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="deleteAlert px-3 py-1 text-sm bg-red-100 text-red-600 rounded hover:bg-red-200" data-index="${index}">
+              <i class="fas fa-trash"></i> Excluir
+            </button>
+          </div>
+        </div>
+      `).join("");
+
+      // Eventos dos botões
+      document.querySelectorAll(".editAlert").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = btn.dataset.index;
+          openModal("Editar alerta:", meusAlertas[idx].titulo, (value) => {
+            if(value) {
+              meusAlertas[idx].titulo = value;
+              renderAlertList();
+            }
+          });
+        });
+      });
+
+      document.querySelectorAll(".deleteAlert").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = btn.dataset.index;
+          openModal("Deseja realmente excluir este alerta?", "Digite 'SIM' para confirmar", (value) => {
+            if(value.toUpperCase() === "SIM") {
+              meusAlertas.splice(idx, 1);
+              renderAlertList();
+            }
+          });
+        });
+      });
+    }
+
+    document.getElementById("addAlertBtn").addEventListener("click", () => {
+      openModal("Digite o título do alerta:", "", (value) => {
+        if(value) {
+          meusAlertas.push({ titulo: value, data: new Date().toLocaleDateString("pt-BR") });
+          renderAlertList();
+        }
+      });
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.location.href = "/radar-florestal.io/dashboard.html";
+    });
+
+    // Inicializa a lista
+    renderAlertList();
+  </script>
+</body>
+</html>
